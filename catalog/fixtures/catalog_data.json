@@ -1,0 +1,79 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Bath accessories",
+      "description": "Various bathroom accessories"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Household goods",
+      "description": "Test text"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Gaming accessories",
+      "description": "Essential for Games"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Home and Kitchen",
+      "description": "kitchen gadgets"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Rubber Duck",
+      "description": "Very beautiful yellow duck.",
+      "slug": "test",
+      "image": "",
+      "category": 1,
+      "price": "37.00",
+      "created_at": "2024-08-30T10:42:54.169Z",
+      "updated_at": "2024-08-30T10:42:54.169Z",
+      "currency": "USD"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Soap",
+      "description": "Test soap",
+      "slug": "test",
+      "image": "",
+      "category": 1,
+      "price": "27.00",
+      "created_at": "2024-08-30T10:47:22.288Z",
+      "updated_at": "2024-08-30T10:47:22.288Z",
+      "currency": "USD"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Shovel",
+      "description": "Some shovel.",
+      "slug": "test",
+      "image": "",
+      "category": 2,
+      "price": "75.00",
+      "created_at": "2024-08-30T11:01:29.483Z",
+      "updated_at": "2024-08-30T11:01:29.483Z",
+      "currency": "USD"
+    }
+  }
+]
