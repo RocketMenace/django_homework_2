@@ -41,8 +41,8 @@
       "image": "",
       "category": 1,
       "price": "37.00",
-      "created_at": "2024-08-30T10:42:54.169Z",
-      "updated_at": "2024-08-30T10:42:54.169Z",
+      "created_at": "2024-08-31T00:14:10.632Z",
+      "updated_at": "2024-08-31T00:14:10.632Z",
       "currency": "USD"
     }
   },
@@ -56,8 +56,8 @@
       "image": "",
       "category": 1,
       "price": "27.00",
-      "created_at": "2024-08-30T10:47:22.288Z",
-      "updated_at": "2024-08-30T10:47:22.288Z",
+      "created_at": "2024-08-31T00:14:10.632Z",
+      "updated_at": "2024-08-31T00:14:10.632Z",
       "currency": "USD"
     }
   },
@@ -71,8 +71,53 @@
       "image": "",
       "category": 2,
       "price": "75.00",
-      "created_at": "2024-08-30T11:01:29.483Z",
-      "updated_at": "2024-08-30T11:01:29.483Z",
+      "created_at": "2024-08-31T00:14:10.632Z",
+      "updated_at": "2024-08-31T00:14:10.632Z",
+      "currency": "USD"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Headset",
+      "description": "Stereo gaming  headset",
+      "slug": "stereo-headset",
+      "image": "",
+      "category": 3,
+      "price": "22.00",
+      "created_at": "2024-08-31T00:16:22.375Z",
+      "updated_at": "2024-08-31T00:16:22.375Z",
+      "currency": "USD"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Keyboard",
+      "description": "Gaming keyboard",
+      "slug": "keyboard",
+      "image": "",
+      "category": 3,
+      "price": "40.00",
+      "created_at": "2024-08-31T00:17:24.946Z",
+      "updated_at": "2024-08-31T00:17:24.946Z",
+      "currency": "USD"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "name": "Electric Sandwich Maker",
+      "description": "Hot sandwiches in minute",
+      "slug": "Electric-Sandwich-Maker",
+      "image": "",
+      "category": 4,
+      "price": "14.00",
+      "created_at": "2024-08-31T00:19:35.316Z",
+      "updated_at": "2024-08-31T00:19:35.316Z",
       "currency": "USD"
     }
   }

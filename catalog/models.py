@@ -6,6 +6,18 @@ from django.db import models
 NULLABLE = {"blank": True, "null": True}
 
 
+class Contact(models.Model):
+    first_name = models.CharField(max_length=50, verbose_name="first_name")
+    last_name = models.CharField(max_length=50, verbose_name="last_name")
+    email = models.EmailField(max_length=50)
+    phone_number = models.CharField(max_length=12)
+
+    class Meta:
+        verbose_name = "contact"
+        verbose_name_plural = "contacts"
+        ordering = ["last_name"]
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="name")
     description = models.TextField(verbose_name="description")
@@ -21,7 +33,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-
     class Currency(models.Choices):
         RUBLES = "RUB"
         DOLLARS = "USD"
