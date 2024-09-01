@@ -41,7 +41,7 @@ class Command(BaseCommand):
                         product["fields"]["description"],
                         product["fields"]["slug"],
                         product["fields"]["image"],
-                        product["fields"]["category"],
+                        Category.objects.get(pk=product["fields"]["category"]).id,
                         product["fields"]["price"],
                         product["fields"]["created_at"],
                         product["fields"]["updated_at"],

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load my_tags %}
 
-
 {% block title%}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Skystore</h1>
@@ -11,22 +10,19 @@
 <div class="container">
     {% block content %}
     <div class="row text-center">
-        {% for product in products %}
-        <div class="col-3">
+        <div class="col-10" >
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <p>{{ product.description }}</p>
                 </div>
                 <div class="card-body">
-                    <p><img src="{{ product.image | media_filter }}" alt="Image not found" width="200" height="200"></p>
+                    <p><img src="{{ product.image | media_filter }}" alt="Image not found" height="300" width="300"></p>
                     <p>{{ product.price }} {{ product.currency }}</p>
-                    <a class="btn btn-primary" href="{% url 'product' product.pk %}" role="button">Купить</a>
-
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
     {% endblock %}
 </div>
-
