@@ -14,7 +14,7 @@
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
-                    <p>{{ product.description }}</p>
+                    <p>{{ product.description | truncatechars:100 }}</p>
                 </div>
                 <div class="card-body">
                     <p><img src="{{ product.image | media_filter }}" alt="Image not found" height="300" width="300"></p>

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="row g-3" method="post">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label for="inputName" class="form-label">Название товара</label>
+        <input type="text" class="form-control" id="inputName" name="name">
+    </div>
+    <div class="col-12">
+        <label for="exampleFormControlTextarea1" class="form-label">Описание товара</label>
+        <input class="form-control" id="exampleFormControlTextarea1" name="description">
+    </div>
+
+    <div class="mb-3">
+        <label for="ImageFile" class="form-label">Добавить изображение</label>
+        <input class="form-control" type="file" id="ImageFile" name="image">
+    </div>
+    <div class="col-md-6">
+        <label for="inputCurrency" class="form-label">Валюта</label>
+        <input type="text" class="form-control" id="inputCurrency" name="currency">
+    </div>
+
+    <div class="col-md-6">
+        <label for="inputCity" class="form-label">Цена</label>
+        <input type="text" class="form-control" id="inputCity" name="price">
+        <p></p>
+        <select class="form-select" aria-label="Default select example" name="category">
+            <option selected>Выберите категорию</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Добавить в каталог</button>
+    </div>
+</form>
+{% endblock %}
