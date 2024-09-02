@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from .models import Product
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 
 
-def get_home_page(request):
+def get_home_page(request, page_number=1):
     products = Product.objects.all()
-    context = {"products": products, }
+    paginator = Paginator(products, per_page=2)
+    products_paginator = paginator.page(page_number)
+    context = {"products": products_paginator, }
     return render(request, "home.html", context)
 
 
