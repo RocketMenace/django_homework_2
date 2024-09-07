@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block title %}
+<h1>My blog</h1>
+<a class="btn btn-primary" href="{% url 'blog:create_post' %}" role="button">Write post</a>
+<a class="btn btn-primary" href="{% url 'blog:posts_list' %}" role="button">Published posts</a>
+{% endblock %}
+
+{% block content %}
+<div class="row text-center">
+    <h1>List of the latest posts</h1>
+    {% for post in object_list %}
+
+    <div class="row">
+        {% if post.status == 'DF' %}
+        <div class="card mb-4 box-shadow">
+            <a href="{% url 'blog:post_detail' post.id %}">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ post.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <p><img src="{{ post.image | media_filter }}" alt="Image not found" width="200" height="200"></p>
+                </div>
+            </a>
+            <div class="card-footer">
+                <div class="btn-group">
+                    <a href="{% url 'blog:post_edit' post.id %}" role="button" class="btn btn-sm btn-outline-secondary">Edit
+                        post</a>
+                    <a href="{% url 'blog:post_delete' post.id %}" role="button" class="btn btn-sm btn-outline-danger">Delete
+                        post</a>
+                    <a href="{% url 'blog:make_public' post.id %}" role="button"
+                       class="btn btn-sm btn-outline-success">Publish</a>
+
+                </div>
+            </div>
+            <p class="date">
+                Created at {{ post.created_at }}
+            </p>
+            {{ post.content | truncatewords:30 | linebreaks }}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}"><a class="page-link"
+                                                                                             href="{% if page_obj.has_previous %} {% url 'blog:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}">Previous</a>
+            </li>
+            {% for page in paginator.page_range %}
+            <li class="page-item"><a class="page-link" href="{% url 'blog:paginator' page %}">{{ page }}</a></li>
+            {% endfor %}
+            <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}"><a class="page-link"
+                                                                                         href="{% if page_obj.has_next %} {% url 'blog:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+    {% endif %}
+</div>
+
+{% endblock %}

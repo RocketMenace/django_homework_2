@@ -47,7 +47,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     currency = models.CharField(max_length=3, choices=Currency.choices, default=Currency.DOLLARS)
 
-    # manufactured_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return f"{self.name}"
@@ -57,3 +57,6 @@ class Product(models.Model):
         verbose_name_plural = "products"
         ordering = ["name", "price"]
         indexes = [models.Index(fields=["name", ])]
+
+
+

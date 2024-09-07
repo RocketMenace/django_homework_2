@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form class="row g-3" method="post">
+<form class="row g-3" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-md-6">
         <label for="inputName" class="form-label">Название товара</label>
-        <input type="text" class="form-control" id="inputName" name="name">
+        <input type="text" class="form-control" id="inputName" name="name" placeholder="Название товара">
     </div>
     <div class="col-12">
         <label for="exampleFormControlTextarea1" class="form-label">Описание товара</label>
-        <input class="form-control" id="exampleFormControlTextarea1" name="description">
+        <input class="form-control" id="exampleFormControlTextarea1" name="description" placeholder="Описание товара">
     </div>
 
     <div class="mb-3">
@@ -22,8 +22,8 @@
     </div>
 
     <div class="col-md-6">
-        <label for="inputCity" class="form-label">Цена</label>
-        <input type="text" class="form-control" id="inputCity" name="price">
+        <label for="inputPrice" class="form-label">Цена</label>
+        <input type="text" class="form-control" id="inputPrice" name="price">
         <p></p>
         <select class="form-select" aria-label="Default select example" name="category">
             <option selected>Выберите категорию</option>
