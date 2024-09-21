@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Contact
+from .models import Product, Category, Contact, Version
 
 
 # Register your models here.
@@ -26,3 +26,10 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ("first_name", "last_name")
     search_fields = ("first_name", "last_name", "email", "phone_number")
     ordering = ("first_name", "last_name")
+
+
+@admin.register(Version)
+class VersionAdmin(admin.ModelAdmin):
+    list_display = ["product_id", "version_number", "version_name", "is_active"]
+    list_filter = ["version_number", "version_name", "is_active"]
+    ordering = ["-version_number"]

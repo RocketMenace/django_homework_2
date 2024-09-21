@@ -1,8 +1,9 @@
+from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.utils import timezone
-from .models import Post, PublishedManager
+
+from .models import Post
 
 
 # Create your views here.
@@ -39,6 +40,9 @@ class PostDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views += 1
         self.object.save()
+        if self.object.views == 10:
+            send_mail(subject="Django_app", message="Ваш пост достиг отметки в 10 просмотров", from_email="percivalharry@yandex.ru",
+                      recipient_list=["testskyprokostin@yandex.ru"])
         return self.object
 
 
@@ -60,6 +64,7 @@ def make_public(request, pk):
     post.status = "PB"
     post.save()
     return redirect(reverse_lazy("blog:posts_in_process"))
+
 
 def republish(request, pk):
     post = get_object_or_404(Post, pk=pk)

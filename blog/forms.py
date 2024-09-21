@@ -8,7 +8,6 @@ class CreatePostForm(ModelForm):
     content = CharField(widget=TextInput(
         attrs={"class": "form-control", "id": "exampleFormControlTextarea1", "rows": "3",
                "placeholder": "Post content"}))
-    # image = ImageField(widget=Fi)
 
     class Meta:
         model = Post

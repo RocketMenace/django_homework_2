@@ -11,35 +11,44 @@
 <div class="container">
     {% block content %}
     <div class="row text-center">
-        {% for product in object_list %}
+        {% for version in versions %}
         <div class="col-6">
+            {% for product in object_list %}
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
                 </div>
                 <div class="card-body">
+                    <h5>{{ version.version_name }}</h5>
                     <p><img src="{{ product.image | media_filter }}" alt="Image not found" width="200" height="200"></p>
                     <p>{{ product.price }} {{ product.currency }}</p>
+                </div>
+                <div class="card-footer">
                     <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
-
+                    <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
+                       role="button">Изменить</a>
+                    <a class="btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}"
+                       role="button">Удалить</a>
                 </div>
             </div>
+            {% endfor %}
         </div>
+
         {% endfor %}
         <div class="col-3">
-            <a class="btn btn-primary" href="{% url 'catalog:add_product' %}" role="button">Добавить товар в каталог</a>
+
         </div>
         {% if is_paginated %}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}"><a class="page-link"
-                                                                                                    href="{% if page_obj.has_previous %} {% url 'catalog:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}">Previous</a>
+                                                                                                 href="{% if page_obj.has_previous %} {% url 'catalog:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}">Previous</a>
                 </li>
                 {% for page in paginator.page_range %}
                 <li class="page-item"><a class="page-link" href="{% url 'catalog:paginator' page %}">{{ page }}</a></li>
                 {% endfor %}
                 <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}"><a class="page-link"
-                                                                                                href="{% if page_obj.has_next %} {% url 'catalog:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">Next</a>
+                                                                                             href="{% if page_obj.has_next %} {% url 'catalog:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">Next</a>
                 </li>
             </ul>
         </nav>
