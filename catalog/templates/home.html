@@ -11,9 +11,9 @@
 <div class="container">
     {% block content %}
     <div class="row text-center">
-        {% for version in versions %}
+        {% for product in object_list %}
         <div class="col-6">
-            {% for product in object_list %}
+
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
@@ -31,9 +31,7 @@
                        role="button">Удалить</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
-
         {% endfor %}
         <div class="col-3">
 

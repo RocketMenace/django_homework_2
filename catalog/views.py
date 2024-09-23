@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, DetailView, TemplateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
@@ -23,16 +24,20 @@ class ContactsTemplateView(TemplateView):
     template_name = "contacts.html"
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "product.html"
+    login_url = reverse_lazy("users:login")
+    redirect_field_name = reverse_lazy("catalog:product_list")
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = "add_product.html"
     success_url = reverse_lazy("catalog:product_list")
+    login_url = reverse_lazy("users:login")
+    redirect_field_name = reverse_lazy("catalog:product_list")
 
     def get_context_data(self, **kwargs):
         SubjectFormSet = inlineformset_factory(Product, Version, form=VersionUpdateForm, extra=1)
@@ -43,6 +48,7 @@ class ProductCreateView(CreateView):
             context["formset"] = SubjectFormSet(self.request.POST)
         else:
             context["formset"] = SubjectFormSet()
+            context["versions"] = Version.objects.all()
         return context
 
     def form_valid(self, form):
@@ -50,15 +56,19 @@ class ProductCreateView(CreateView):
         self.object = form.save()
         if formset.is_valid():
             formset.instance = self.object
+            formset.instance.owner = self.request.user
             formset.save()
+
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     success_url = reverse_lazy("catalog:product_list")
     template_name = "edit_product.html"
+    login_url = reverse_lazy("users:login")
+    redirect_field_name = reverse_lazy("catalog:product_list")
 
     def get_context_data(self, **kwargs):
         SubjectFormSet = inlineformset_factory(Product, Version, form=VersionUpdateForm, extra=1)
@@ -80,7 +90,9 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
     template_name = "product_confirm_delete.html"
+    login_url = reverse_lazy("users:login")
+    redirect_field_name = reverse_lazy("catalog:product_list")

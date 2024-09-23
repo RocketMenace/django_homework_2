@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import User
 # Create your models here.
 
 
@@ -37,6 +37,7 @@ class Product(models.Model):
         RUBLES = "RUB"
         DOLLARS = "USD"
 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="владелец", related_name="owner", **NULLABLE)
     name = models.CharField(max_length=50, verbose_name="название")
     description = models.TextField(verbose_name="описание")
     slug = models.SlugField(max_length=100, default="product", **NULLABLE)

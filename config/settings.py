@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     "catalog",
     "blog",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "django_homework",
-        "USER": "igor",
+        "USER": "postgres",
         "PASSWORD": "qwerasdf"
     }
 }
@@ -125,9 +126,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-EMAIL_HOST = "smtp.yandex.com"
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_HOST_USER = "grizzly1871@yandex.ru"
+EMAIL_HOST_PASSWORD = "txxuddjirwdphmgb"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "testskyprokostin@yandex.ru"
-EMAIL_HOST_PASSWORD = "gkmabhherdxtdect"
 EMAIL_USE_SSL = True
-DEFAUl_FROM_EMAIL = ""
+
+AUTH_USER_MODEL = "users.User"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

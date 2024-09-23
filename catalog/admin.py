@@ -6,9 +6,9 @@ from .models import Product, Category, Contact, Version
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "price", "currency", "category", "created_at")
-    list_filter = ("category",)
-    search_fields = ("name", "description")
+    list_display = ("id", "name", "price", "owner","currency", "category", "created_at")
+    list_filter = ("category", "owner")
+    search_fields = ("name", "description", "owner")
     prepopulated_fields = {"slug": ("name",)}
     raw_id_fields = ["category"]
     date_hierarchy = "created_at"
