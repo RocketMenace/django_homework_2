@@ -6,6 +6,11 @@ from users.models import User
 NULLABLE = {"blank": True, "null": True}
 
 
+class ProductStatusManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Product.Status.ACTIVE)
+
 class Contact(models.Model):
     first_name = models.CharField(max_length=50, verbose_name="first_name")
     last_name = models.CharField(max_length=50, verbose_name="last_name")
@@ -37,6 +42,10 @@ class Product(models.Model):
         RUBLES = "RUB"
         DOLLARS = "USD"
 
+    class Status(models.TextChoices):
+        ACTIVE = "Активен"
+        NOT_ACTIVE = "Не активен"
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="владелец", related_name="owner", **NULLABLE)
     name = models.CharField(max_length=50, verbose_name="название")
     description = models.TextField(verbose_name="описание")
@@ -47,6 +56,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     currency = models.CharField(max_length=3, choices=Currency.choices, default=Currency.DOLLARS, verbose_name="валюта")
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.NOT_ACTIVE, verbose_name="статус")
+    objects = models.Manager()
+    active = ProductStatusManager()
 
     def __str__(self):
         return f"{self.name}"
@@ -56,6 +68,9 @@ class Product(models.Model):
         verbose_name_plural = "продукты"
         ordering = ["name", "price"]
         indexes = [models.Index(fields=["name", ])]
+        permissions = [("set_status", "Can change product status"),
+                       ("change_product_description", "Can change product description"),
+                       ("change_product_category", "Can change product category")]
 
 
 class Version(models.Model):

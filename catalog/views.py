@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.views.generic import CreateView, ListView, DetailView, TemplateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from .models import Product, Category, Version
-from .forms import ProductCreateForm, ProductUpdateForm, VersionUpdateForm
+from .forms import ProductCreateForm, ProductUpdateForm, VersionUpdateForm, ProductOwnerForm, ProductModeratorForm
 
 
 # Create your views here.
@@ -11,8 +12,10 @@ from .forms import ProductCreateForm, ProductUpdateForm, VersionUpdateForm
 
 class ProductListView(ListView):
     model = Product
+    queryset = Product.active.all()
     paginate_by = 2
     template_name = "home.html"
+    context_object_name = "products"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -88,6 +91,17 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser:
+            return ProductUpdateForm
+        if user == self.object.owner:
+            return ProductOwnerForm
+        if user.is_moderator:
+            return ProductModeratorForm
+
+        raise PermissionDenied("Не хватает прав доступа. Обратитесь к администратору")
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):

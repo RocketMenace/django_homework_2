@@ -11,7 +11,8 @@
 <div class="container">
     {% block content %}
     <div class="row text-center">
-        {% for product in object_list %}
+        {% for product in products %}
+
         <div class="col-6">
 
             <div class="card mb-4 box-shadow">
@@ -24,14 +25,23 @@
                     <p>{{ product.price }} {{ product.currency }}</p>
                 </div>
                 <div class="card-footer">
+                    {% if user == product.owner or user.is_superuser %}
                     <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
                     <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
                        role="button">Изменить</a>
                     <a class="btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}"
                        role="button">Удалить</a>
+                    {% elif user.is_moderator %}
+                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
+                       role="button">Изменить</a>
+                    {% else %}
+                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+
         {% endfor %}
         <div class="col-3">
 
