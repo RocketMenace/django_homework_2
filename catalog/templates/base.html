@@ -19,6 +19,7 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:posts_list' %}">Перейти в блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:add_product' %}" role="button">Добавить товар в
             каталог</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:categories_list' %}" role="button">Категории товаров</a>
         {% if user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:logout' %}" role="button">Выйти</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:profile_edit' %}" role="button">Профиль</a>

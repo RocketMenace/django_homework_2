@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-{% load my_tags %}
-
+{% extends 'base.html' %}
 
 {% block title%}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -11,34 +9,17 @@
 <div class="container">
     {% block content %}
     <div class="row text-center">
-        {% for product in products %}
+        {% for category in categories %}
 
         <div class="col-6">
 
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <a href="{% url 'catalog:categories_products' category.pk %}" class="btn btn-primary">{{ category.name }}</a>
+
                 </div>
                 <div class="card-body">
-                    <h5>{{ version.version_name }}</h5>
-                    <p><img src="{{ product.image | media_filter }}" alt="Image not found" width="200" height="200"></p>
-                    <p>{{ product.price }} {{ product.currency }}</p>
-                </div>
-                <div class="card-footer">
-
-                    {% if user == product.owner or user.is_superuser %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
-                    <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
-                       role="button">Изменить</a>
-                    <a class="btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}"
-                       role="button">Удалить</a>
-                    {% elif user.is_moderator %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
-                    <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
-                       role="button">Изменить</a>
-                    {% else %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
-                    {% endif %}
+                    {{ category.description }}
                 </div>
             </div>
         </div>
@@ -65,4 +46,3 @@
     </div>
     {% endblock %}
 </div>
-
