@@ -27,17 +27,17 @@
                 <div class="card-footer">
 
                     {% if user == product.owner or user.is_superuser %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Просмотр</a>
                     <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
                        role="button">Изменить</a>
                     <a class="btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}"
                        role="button">Удалить</a>
                     {% elif user.is_moderator %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Просмотр</a>
                     <a class="btn btn-primary" href="{% url 'catalog:edit_product' product.pk %}"
                        role="button">Изменить</a>
                     {% else %}
-                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Купить</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:product' product.pk %}" role="button">Просмотр</a>
                     {% endif %}
                 </div>
             </div>

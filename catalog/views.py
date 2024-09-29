@@ -1,13 +1,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, DetailView, TemplateView, UpdateView, DeleteView
+from django.views.generic import (
+    CreateView,
+    ListView,
+    DetailView,
+    TemplateView,
+    UpdateView,
+    DeleteView,
+)
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django_countries import settings
 from django.core.cache import cache
 from .models import Product, Category, Version
-from .forms import ProductCreateForm, ProductUpdateForm, VersionUpdateForm, ProductOwnerForm, ProductModeratorForm
+from .forms import (
+    ProductCreateForm,
+    ProductUpdateForm,
+    VersionUpdateForm,
+    ProductOwnerForm,
+    ProductModeratorForm,
+)
 from .services import get_categories
 
 
@@ -37,18 +50,6 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     login_url = reverse_lazy("users:login")
     redirect_field_name = reverse_lazy("catalog:product_list")
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        if settings.CACHE_ENABLED:
-            key = f"product_{self.object.pk}"
-            product = cache.get(key)
-            if product is None:
-                product = Product.objects.get(pk=self.object.pk)
-                cache.set(key, product, 30)
-        else:
-            product = Product.objects.get(pk=self.object.pk)
-        context_data["product"] = product
-        return context_data
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
@@ -59,7 +60,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = reverse_lazy("catalog:product_list")
 
     def get_context_data(self, **kwargs):
-        SubjectFormSet = inlineformset_factory(Product, Version, form=VersionUpdateForm, extra=1)
+        SubjectFormSet = inlineformset_factory(
+            Product, Version, form=VersionUpdateForm, extra=1
+        )
         context = super(ProductCreateView, self).get_context_data()
         context["categories"] = Category.objects.all()
         context["formset"] = SubjectFormSet
@@ -90,7 +93,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     redirect_field_name = reverse_lazy("catalog:product_list")
 
     def get_context_data(self, **kwargs):
-        SubjectFormSet = inlineformset_factory(Product, Version, form=VersionUpdateForm, extra=1)
+        SubjectFormSet = inlineformset_factory(
+            Product, Version, form=VersionUpdateForm, extra=1
+        )
         context = super(ProductUpdateView, self).get_context_data()
         context["categories"] = Category.objects.all()
         context["formset"] = SubjectFormSet
@@ -127,7 +132,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     redirect_field_name = reverse_lazy("catalog:product_list")
 
 
-class CategoryListView(LoginRequiredMixin,ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     login_url = reverse_lazy("users:login")
     redirect_field_name = reverse_lazy("catalog:product_list")
@@ -137,16 +142,9 @@ class CategoryListView(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        if settings.CACHE_ENABLED:
-            key = f"categories_{self.object_list}"
-            categories = cache.get(key)
-            if categories is None:
-                categories = get_categories()
-                cache.set(key, categories)
-        else:
-            categories = get_categories()
-        context_data["categories"] = categories
+        context_data["categories"] = get_categories()
         return context_data
+
 
 def products_by_category(request, pk):
     products = Category.objects.get(pk=pk).products.all().filter(status="Активен")

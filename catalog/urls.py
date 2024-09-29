@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 from .views import (
     ProductListView,
     ProductDetailView,
@@ -24,6 +25,6 @@ urlpatterns = [
     path("edit_product/<int:pk>", ProductUpdateView.as_view(), name="edit_product"),
     path("delete_product/<int:pk>", ProductDeleteView.as_view(), name="delete_product"),
     path("page/<int:page>", ProductListView.as_view(), name="paginator"),
-    path("product/<int:pk>/", ProductDetailView.as_view(), name="product"),
+    path("product/<int:pk>/", cache_page(10)(ProductDetailView.as_view()), name="product"),
     path("contacts/", ContactsTemplateView.as_view(), name="contacts"),
 ]
